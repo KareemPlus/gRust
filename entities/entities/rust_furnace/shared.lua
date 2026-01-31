@@ -25,12 +25,12 @@ ENT.Furnace = {
     },
     Cookables = {
     --  Input                       Output                  Time        Chance
-        ["metal_ore"] =             {"metal_fragments",     3.33},
-        ["sulfur_ore"] =            {"sulfur",              1.67},
-        ["hq_metal_ore"] =          {"hq_metal",            6.67},
-        ["empty_can_of_beans"] =    {"metal_fragments",     10},
-        ["empty_tuna_can"] =        {"metal_fragments",     10},
-        ["wood"] =                  {"charcoal",            2,          0.75}
+        ["metal_ore"] =             {"metal_fragments",     0.1},
+        ["sulfur_ore"] =            {"sulfur",              0.1},
+        ["hq_metal_ore"] =          {"hq_metal",            0.1},
+        ["empty_can_of_beans"] =    {"metal_fragments",     0.1},
+        ["empty_tuna_can"] =        {"metal_fragments",     0.1},
+        ["wood"] =                  {"charcoal",            0.1,          0.75}
     },
 }
 
