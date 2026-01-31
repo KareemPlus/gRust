@@ -80,13 +80,12 @@ function PANEL:Paint(w, h)
 end
     
 local function SpawnItem(id, amount)
-    if (GetConVar("sv_cheats"):GetBool() == false) then
-        LocalPlayer():ChatPrint("You must enable sv_cheats to spawn items")
-        return
-    end
-    
-    RunConsoleCommand("grust_giveitem", id, amount)
+    net.Start("wis_giveitem")
+        net.WriteString(id)
+        net.WriteInt(amount, 16)
+    net.SendToServer()
 end
+
 
 local ITEM_PADDING = 8
 local BLUEPRINT_ICON = Material("items/misc/blueprint.png", "smooth")
