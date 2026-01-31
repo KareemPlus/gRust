@@ -1,3 +1,6 @@
+util.AddNetworkString( "wis_giveitem" )
+
+-- not used anywhere
 local function ItemAutoComplete(cmd, argStr, args)
     if (#args > 1) then return {} end
     local searchItem = string.lower(args[1] or "")
@@ -18,10 +21,25 @@ local function ItemAutoComplete(cmd, argStr, args)
     return items
 end
 
-concommand.Add("grust_giveitem", function(pl, cmd, args)
-    local itemID = args[1]
-    local amount = tonumber(args[2]) or 1
+local function give_item(ply, id, amount)
+    local itemID = id
+    local amount = tonumber(amount) or 1
     
-    pl:AddItem(gRust.CreateItem(itemID, amount), ITEM_PICKUP)
-    gRust.Log(string.format("%s gave themselves %s x%d", pl:Name(), itemID, amount))
-end, ItemAutoComplete, "Give yourself an item", FCVAR_CHEAT)
+    ply:AddItem(gRust.CreateItem(itemID, amount), ITEM_PICKUP)
+    gRust.Log(string.format("%s gave themselves %s x%d", ply:Name(), itemID, amount))
+
+end
+
+
+net.Receive("wis_giveitem", function(len, ply)
+    local rank = ply:GetNWString("ADM_Rank", "user")
+    if rank ~= "Admin" and rank ~= "Owner" and rank ~= "superadmin" then
+        ply:ChatMessage("You are not allowed to use this command.")
+        return
+    end
+
+    local id = net.ReadString()
+    local amount = net.ReadInt(16)
+
+    give_item(ply, id, amount)
+end)
